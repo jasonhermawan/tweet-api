@@ -21,10 +21,6 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: true,
       },
-      date: {
-        type: Sequelize.DATE,
-        allowNull: true,
-      },
       like: {
         type: Sequelize.INTEGER,
         allowNull: true,
