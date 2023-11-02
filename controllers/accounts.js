@@ -1,3 +1,43 @@
+
+const { account } = require("../models")
+module.exports = {
+    getData: async (req, res) => {
+        try {
+            const result = await account.findAll({
+                where: req.query,
+                attributes: { exclude: ["password"] },
+                order: [["id", "ASC"]]
+
+            });
+            return res.status(200).send(result)
+        } catch (error) {
+            console.log(error);
+            return res.status(500).send(error)
+        }
+    }, 
+    update: async (req, res) => {
+        try {
+            const result = await account.update(
+                {
+                    username: req.body.username,
+                }, 
+                {
+                where: {
+                    id: req.params.id,
+                },
+            })
+            return res.status(200).send({
+                succes : true ,
+                message : "Update succes",
+                total : result 
+            })
+        } catch (error) {
+            console.log(error);
+            return res.status(error.rc || 500).send(error)
+        }
+    },
+}
+
 const { accounts } = require("../models");
 
 module.exports = {
@@ -10,28 +50,6 @@ module.exports = {
       return res.status(500).send(error);
     }
   },
-  //   create: async (req, res) => {
-  //     try {
-  //       const checkAccount = await accounts.findOne({
-  //         where: { username: req.body.username },
-  //       });
-  //       console.log(checkAccount);
-  //       if (checkAccount) {
-  //         return res.status(400).send({
-  //           success: false,
-  //           message: "Account is Already Exist",
-  //         });
-  //       } else {
-  //         const result = await accounts.create(req.body);
-  //         return res.status(201).send(result);
-  //       }
-  //       //   return res.status(201).send(result);
-  //     } catch (error) {
-  //       console.log("test error", error);
-  //       return res.status(500).send(error);
-  //     }
-  //   },
-  // };
 
   create: async (req, res) => {
     try {
