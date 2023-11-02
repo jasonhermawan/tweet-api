@@ -3,6 +3,7 @@ const PORT = process.env.PORT || 2000;
 const express = require("express");
 const app = express();
 const cors = require("cors");
+const { tweetsRouter } = require("./routers");
 app.use(cors());
 app.use(express.json());
 
@@ -13,6 +14,7 @@ app.get("/", (req, res) => {
 // Define Router
 const {accountsRouter} = require("./routers")
 app.use("/accounts", accountsRouter)
+app.use("/tweet", tweetsRouter);
 
 app.listen(PORT, () => {
   console.log(`API RUNNING ON PORT ${PORT}`);
